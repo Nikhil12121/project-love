@@ -385,7 +385,7 @@
             }
             .memory-grid {
                 gap: 0.6rem;
-                max-width: 320px;
+                max-width: 260px;
             }
             .card-front, .card-back {
                 border-radius: 10px;
@@ -467,8 +467,8 @@
     <div id="game-stage">
         <div class="instructions">
             <h1>Match My Hearts 💗</h1>
-            <p>Find all matching pairs to unlock my special message!</p>
-            <div class="score-board">Matches: <span id="matches-counter">0</span>/8</div>
+            <p>Find the 2 matching pairs to unlock my special message!</p>
+            <div class="score-board">Matches: <span id="matches-counter">0</span>/2</div>
         </div>
 
         <!-- Memory Match Grid -->
@@ -507,9 +507,9 @@
         /* Memory Grid and Card Styles */
         .memory-grid {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 1rem;
-            max-width: 420px;
+            max-width: 320px;
             width: 90%;
             margin: 0 auto;
             perspective: 1000px;
@@ -591,9 +591,9 @@
         let lockBoard = false;
         let firstCard, secondCard;
         let matchesFound = 0;
-        const totalMatches = 8;
+        const totalMatches = 2;
 
-        const cardIcons = ['🧸', '💖', '🌹', '🍫', '🧁', '💐', '💌', '🐶', '🧸', '💖', '🌹', '🍫', '🧁', '💐', '💌', '🐶'];
+        const cardIcons = ['🧸', '🧸', '💖', '💖', '🌹', '🍫', '🧁', '💐', '💌'];
 
         window.onload = function () {
             initGame();
