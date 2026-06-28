@@ -451,10 +451,54 @@
                 opacity: 0;
             }
         }
+
+        /* Floating Music Toggle Button */
+        .music-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            color: var(--text-color);
+        }
+        
+        .music-toggle:hover {
+            transform: scale(1.1);
+            background: rgba(255, 255, 255, 0.4);
+        }
+        
+        .music-toggle.playing {
+            animation: pulseMusic 1.5s infinite alternate;
+        }
+
+        @keyframes pulseMusic {
+            from { transform: scale(1); }
+            to { transform: scale(1.08); }
+        }
     </style>
 </head>
 
 <body>
+
+    <!-- Music Toggle Button & Audio -->
+    <button id="music-btn" class="music-toggle" onclick="toggleMusic()">🔇</button>
+    <audio id="bg-music" loop>
+        <source src="https://upload.wikimedia.org/wikipedia/commons/transcoded/e/ec/Erik_Satie_-_Gymnop%C3%A9die_No._1.ogg/Erik_Satie_-_Gymnop%C3%A9die_No._1.ogg.mp3" type="audio/mpeg">
+        <source src="https://upload.wikimedia.org/wikipedia/commons/e/ec/Erik_Satie_-_Gymnop%C3%A9die_No._1.ogg" type="audio/ogg">
+    </audio>
 
     <!-- Background Shapes -->
     <div class="bg-shapes">
@@ -722,11 +766,36 @@
         function openEnvelope() {
             const envContainer = document.getElementById('envelope');
             const letterView = document.getElementById('letter-view');
+            const music = document.getElementById('bg-music');
+            const btn = document.getElementById('music-btn');
+
+            if (music) {
+                music.play().then(() => {
+                    btn.innerText = '🔊';
+                    btn.classList.add('playing');
+                }).catch(err => console.log("Autoplay failed:", err));
+            }
+
             envContainer.classList.add('open');
             setTimeout(() => {
                 letterView.classList.add('active');
                 createConfetti();
             }, 1500);
+        }
+
+        function toggleMusic() {
+            const music = document.getElementById('bg-music');
+            const btn = document.getElementById('music-btn');
+            if (music.paused) {
+                music.play().then(() => {
+                    btn.innerText = '🔊';
+                    btn.classList.add('playing');
+                }).catch(err => console.log(err));
+            } else {
+                music.pause();
+                btn.innerText = '🔇';
+                btn.classList.remove('playing');
+            }
         }
 
         function closeLetter() {
